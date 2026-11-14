@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment & Bank Details - Salman Farsi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            text-align: center;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        header h1 { margin: 0; color: #1a73e8; font-size: 24px; }
+        header p { margin: 6px 0; color: #555; font-size: 14px; }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-left: 5px solid #1a73e8;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .card-header .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-header img.logo-img {
+            height: 28px;
+            object-fit: contain;
+        }
+        .card-header h2 { margin: 0; font-size: 18px; color: #333; }
+        .card-header p { margin: 2px 0 0; font-size: 13px; color: #777; }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        .info-label { color: #666; font-weight: 500; }
+        .info-value { font-weight: bold; color: #222; }
+        
+        .copy-btn {
+            background: #e8f0fe;
+            color: #1a73e8;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover { background: #d2e3fc; }
+
+        /* কিউআর কোড কার্ড স্টাইল */
+        .qr-card {
+            text-align: center;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .qr-item {
+            background: #fafafa;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        .qr-item img {
+            width: 100%;
+            max-width: 180px;
+            height: 180px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            padding: 4px;
+            background: #fff;
+            object-fit: contain;
+        }
+        .qr-item h3 { margin: 10px 0 5px; font-size: 16px; color: #333; }
+
+        /* টোস্ট নোটিফিকেশন */
+        #toast {
+            visibility: hidden;
+            min-width: 220px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            bottom: 30px;
+            font-size: 15px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.3s, fadeout 0.3s 2.5s;
+        }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Salman Farsi</h1>
+        <p>📍 Khamarpara, Alamnagar, Rangpur</p>
+        <p>📞 01744-794427</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- ব্যাংক অ্যাকাউন্ট কার্ড -->
+        <div class="card" style="border-left-color: #0056b3;">
+            <div class="card-header">
+                <div class="brand-title">
+                    <div>
+                        <h2>Dutch-Bangla Bank PLC</h2>
+                        <p>Rangpur Branch</p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Account Name:</span>
+                <span class="info-value">SALMAN FARASI</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Account No:</span>
+                <div>
+                    <span class="info-value" id="bank-acc">7017322433233</span>
+                    <button class="copy-btn" onclick="copyText('bank-acc')">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- বিকাশ কার্ড -->
+        <div class="card" style="border-left-color: #e2136e;">
+            <div class="card-header">
+                <div class="brand-title">
+                    <img src="bkash-logo.png" alt="bKash" class="logo-img">
+                    <h2>bKash (Personal)</h2>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Account Number:</span>
+                <div>
+                    <span class="info-value" id="bkash-no">01744-794427</span>
+                    <button class="copy-btn" onclick="copyText('bkash-no')">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- নগদ কার্ড -->
+        <div class="card" style="border-left-color: #f6921e;">
+            <div class="card-header">
+                <div class="brand-title">
+                    <img src="nagad-logo.png" alt="Nagad" class="logo-img">
+                    <h2>Nagad (Personal)</h2>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Account Number:</span>
+                <div>
+                    <span class="info-value" id="nagad-no">01744-794427</span>
+                    <button class="copy-btn" onclick="copyText('nagad-no')">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- রকেট কার্ড -->
+        <div class="card" style="border-left-color: #8c349b;">
+            <div class="card-header">
+                <div class="brand-title">
+                    <img src="rocket-logo.png" alt="Rocket" class="logo-img">
+                    <h2>Rocket (Personal)</h2>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Account Number:</span>
+                <div>
+                    <span class="info-value" id="rocket-no">01744-7944279</span>
+                    <button class="copy-btn" onclick="copyText('rocket-no')">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- সেলফিন কার্ড -->
+        <div class="card" style="border-left-color: #008000;">
+            <div class="card-header">
+                <div class="brand-title">
+                    <img src="cellfin-logo.png" alt="CellFin" class="logo-img">
+                    <h2>CellFin (Personal)</h2>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Account Number:</span>
+                <div>
+                    <span class="info-value" id="cellfin-no">01744-794427</span>
+                    <button class="copy-btn" onclick="copyText('cellfin-no')">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- বাংলা কিউআর কোড সেকশন -->
+        <div class="qr-card">
+            <h2 style="color: #333; margin-top: 0; font-size: 18px;">Bangla QR Codes</h2>
+            <p style="color: #666; font-size: 13px;">যেকোনো অ্যাপ দিয়ে স্ক্যান করে পেমেন্ট করুন</p>
+            
+            <div class="qr-grid">
+                <!-- বিকাশ কিউআর -->
+                <div class="qr-item">
+                    <img src="bkash-qr.jpg" alt="bKash QR">
+                    <h3>bKash QR</h3>
+                    <span class="info-value" style="font-size: 13px; color: #555;">01744794427</span>
+                </div>
+
+                <!-- রকেট কিউআর -->
+                <div class="qr-item">
+                    <img src="rocket-qr.jpg" alt="Rocket QR">
+                    <h3>Rocket / DBBL</h3>
+                    <span class="info-value" style="font-size: 13px; color: #555;">017447944279</span>
+                </div>
+
+                <!-- সেলফিন কিউআর -->
+                <div class="qr-item">
+                    <img src="cellfin-qr.jpg" alt="CellFin QR">
+                    <h3>CellFin / Islami Bank</h3>
+                    <span class="info-value" style="font-size: 13px; color: #555;">01744794427</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toast">Copied Successfully!</div>
+
+    <script>
+        function copyText(elementId) {
+            var text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                var toast = document.getElementById("toast");
+                toast.className = "show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2500);
+            });
+        }
+    </script>
+
+</body>
+</html>
