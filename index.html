@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html_content = """<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
@@ -114,7 +114,7 @@
         }
         .copy-btn:hover { background: #d3e8e1; }
 
-        /* কিউআর কোড কার্ড স্টাইল (ছবির ভেতরের সোনালী বর্ডার সরিয়ে দেওয়া হয়েছে) */
+        /* কিউআর কোড কার্ড স্টাইল */
         .qr-card {
             text-align: center;
             background: linear-gradient(135deg, #162420 0%, #1d352d 50%, #121c19 100%);
@@ -146,7 +146,7 @@
         }
         .qr-item {
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.35);
+            border: none; /* কিউআর আইটেম বক্সের বর্ডার পুরোপুরি মুছে ফেলা হয়েছে */
             border-radius: 10px;
             padding: 15px;
             text-align: center;
@@ -156,7 +156,7 @@
             max-width: 160px;
             height: 160px;
             border-radius: 6px;
-            border: none; /* সোনালী বর্ডার মুছে ফেলা হয়েছে */
+            border: none; /* ছবির ভেতরের বর্ডারও মুছে ফেলা হয়েছে */
             padding: 0;
             background: #fff;
             object-fit: contain;
@@ -329,3 +329,9 @@
 
 </body>
 </html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("Generated index.html successfully")
